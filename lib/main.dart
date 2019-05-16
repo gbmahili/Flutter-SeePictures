@@ -1,17 +1,35 @@
-/**
- * I need to import a helper library from 
- * flutter to get content on the screen
- */
 import 'package:flutter/material.dart';
 
-//Define a 'main' function to run when our app starts
 void main() {
-// Create a new text widget to show some text on the screen
   var app = MaterialApp(
-    // MaterialApp is included in the material.dart file we imported
-    home: Text('Hi there'),
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text("Baraka's Images"),
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.add),
+      //   onPressed: (){
+      //     print('hi there');
+      //   },
+      //   tooltip: 'Add new image',
+      // ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // Add your onPressed code here!
+          print('Clicked on extended floating action button');
+        },
+        label: Text('Add Image'),
+        icon: Icon(Icons.add),
+        backgroundColor: Colors.blueGrey,
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.lightBlueAccent,
+        child: Container(
+          height: 50.0,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    ),
   );
-
-// Take that widget and get it on the screen
   runApp(app);
 }
