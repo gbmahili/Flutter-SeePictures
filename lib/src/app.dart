@@ -39,8 +39,7 @@ class App_OLD_WITHOUT_STATE_NOT_BEING_USED extends StatelessWidget {
 
 // 1. First, create a class with Statefullness which returns the State classs
 class App extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
+  createState() {
     return AppState();
   }
 }
