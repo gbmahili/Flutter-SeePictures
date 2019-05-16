@@ -10,6 +10,12 @@
 
 // import flutter helper library
 import 'package:flutter/material.dart';
+// import http for api calls
+//import 'package:http/http.dart';// this imports everything out of http...but we only need get
+import 'package:http/http.dart' show get; // only retrieve the get method from http, not everything
+import 'dart:convert';
+import 'models/image_model.dart';
+
 
 // Create a class that will be our custom widget (compoent for ReactNative)
 // It must extends the 'StatelessWideget' base class
@@ -51,6 +57,13 @@ class AppState extends State<App> {
 
   // value to be incremeneted
   int counter = 0;
+  // Fetching data from API:
+  void fetchImage() async {
+    counter++;
+    var response = await get('https://jsonplaceholder.typicode.com/photos/$counter');
+    var parsedData = json.decode(response.body);//parsing data like in JS
+    var imageModel = ImageModel.fromJson(parsedData);
+  }
 
   Widget build(context) {
     return MaterialApp(
@@ -61,12 +74,13 @@ class AppState extends State<App> {
         body: Center(child: Text('$counter')),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: () {
-            //increment the counter and update state
-            setState(() {
-              counter += 1;
-            });
-          },
+          onPressed: fetchImage,// no parentesis at the end because we don't want to run the function when build is called
+          // onPressed: () {
+          //   //increment the counter and update state
+          //   setState(() {
+          //     counter += 1;
+          //   });
+          // },
           tooltip: 'Add new image',
         ),
       ),
