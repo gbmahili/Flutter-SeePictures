@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' show get; // only retrieve the get method from http, not everything
 import 'dart:convert';
 import 'models/image_model.dart';
+import 'widgets/image_list.dart';
 
 
 // Create a class that will be our custom widget (compoent for ReactNative)
@@ -57,12 +58,19 @@ class AppState extends State<App> {
 
   // value to be incremeneted
   int counter = 0;
+  //String url = '';
+  List<ImageModel> images = [];
   // Fetching data from API:
   void fetchImage() async {
     counter++;
-    var response = await get('https://jsonplaceholder.typicode.com/photos/$counter');
-    var parsedData = json.decode(response.body);//parsing data like in JS
-    var imageModel = ImageModel.fromJson(parsedData);
+    final response = await get('https://jsonplaceholder.typicode.com/photos/$counter');
+    final parsedData = json.decode(response.body);//parsing data like in JS
+    final imageModel = ImageModel.fromJson(parsedData);
+    // Update the states with list of images
+    setState(() {
+      images.add(imageModel);//push the model to the images list (array)
+      //url = imageModel.url;
+    });
   }
 
   Widget build(context) {
@@ -71,7 +79,7 @@ class AppState extends State<App> {
         appBar: AppBar(
           title: Text("Baraka's Images"),
         ),
-        body: Center(child: Text('$counter')),
+        body: ImageList(images),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: fetchImage,// no parentesis at the end because we don't want to run the function when build is called
